@@ -12,18 +12,16 @@ import java.util.ArrayList;
 
 public class Movie {
 
-    String posterPath;
     String originalTitle;
     String overview;
+    String posterPath;
+    String backdropPath;
 
     public Movie(JSONObject jsonObject) throws JSONException {
-        this.posterPath = jsonObject.getString("poster_path");
         this.originalTitle = jsonObject.getString("original_title");
         this.overview = jsonObject.getString("overview");
-    }
-
-    public String getPosterPath() {
-        return String.format("https://image.tmdb.org/t/p/w342/%s",posterPath);
+        this.posterPath = jsonObject.getString("poster_path");
+        this.backdropPath = jsonObject.getString("backdrop_path");
     }
 
     public String getOriginalTitle() {
@@ -32,6 +30,14 @@ public class Movie {
 
     public String getOverview() {
         return overview;
+    }
+
+    public String getPosterPath() {
+        return String.format("https://image.tmdb.org/t/p/w342/%s",posterPath);
+    }
+
+    public String getBackdropPath() {
+        return String.format("https://image.tmdb.org/t/p/w342/%s",backdropPath);
     }
 
     public static ArrayList<Movie> fromJSONArray(JSONArray jsonArray) {

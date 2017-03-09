@@ -1,6 +1,8 @@
 package com.flickster.adapters;
 
 import android.content.Context;
+import android.content.res.Configuration;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +59,18 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         viewHolder.tvTitle.setText(movie.getOriginalTitle());
         viewHolder.tvOverview.setText(movie.getOverview());
 
-        Picasso.with(getContext()).load(movie.getPosterPath()).into(viewHolder.ivImageView);
+        int orientation = getContext().getResources().getConfiguration().orientation;
+        if(orientation == Configuration.ORIENTATION_PORTRAIT) {
+            Picasso.with(getContext())
+                    .load(movie.getPosterPath()).placeholder(R.mipmap.ic_launcher)
+                    .into(viewHolder.ivImageView);
+        } else if(orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Picasso.with(getContext())
+                    .load(movie.getBackdropPath()).placeholder(R.mipmap.ic_launcher)
+                    .into(viewHolder.ivImageView);
+        } else {
+            Log.e("ERROR","Error in Orientation");
+        }
 
         return convertView;
 
