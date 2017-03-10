@@ -22,6 +22,8 @@ import java.util.List;
 
 public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
+    final String TAG = "Movie Adapter";
+
     private static class ViewHolder {
         ImageView ivImageView;
         TextView tvTitle;
@@ -55,7 +57,6 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.ivImageView.setImageResource(0);
         viewHolder.tvTitle.setText(movie.getOriginalTitle());
         viewHolder.tvOverview.setText(movie.getOverview());
 
@@ -69,7 +70,7 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
                     .load(movie.getBackdropPath()).placeholder(R.mipmap.ic_launcher)
                     .into(viewHolder.ivImageView);
         } else {
-            Log.e("ERROR","Error in Orientation");
+            Log.e(TAG, "Error in Orientation");
         }
 
         return convertView;
