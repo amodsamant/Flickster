@@ -31,7 +31,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         title.setText(movie.getOriginalTitle());
         releaseDate.setText("Release Date:  " + movie.getReleaseDate());
-        ratingBar.setRating((float) movie.getVoteAverage());
+        ratingBar.setRating((float) movie.getVoteAverage()/2f);
         synopsis.setText(movie.getOverview());
 
     }
