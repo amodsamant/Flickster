@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.flickster.R;
 import com.flickster.models.Movie;
+import com.flickster.utils.MovieConstants;
+import com.flickster.utils.MovieUtil;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -33,9 +35,6 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
     }
 
     static final String TAG = "Movie Adapter";
-    static final int MOVIE_TAG = 0;
-    static final int POPULAR_MOVIE_TAG = 1;
-    static final int TOTAL_VIEW_COUNT = 2;
 
     public MovieArrayAdapter(Context context, List<Movie> movies) {
         super(context, android.R.layout.simple_list_item_1, movies);
@@ -43,12 +42,12 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
     @Override
     public int getItemViewType(int position) {
-        return getItem(position).getVoteAverage()>5 ? MOVIE_TAG : POPULAR_MOVIE_TAG;
+        return MovieUtil.getItemTypeRatingBased(getItem(position).getVoteAverage());
     }
 
     @Override
     public int getViewTypeCount() {
-        return TOTAL_VIEW_COUNT;
+        return MovieConstants.TOTAL_VIEW_COUNT;
     }
 
     @Override
@@ -61,7 +60,7 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
         switch (type) {
 
-            case MOVIE_TAG:
+            case MovieConstants.MOVIE_TAG:
 
                 ViewHolder viewHolder;
                 if(convertView == null) {
@@ -97,7 +96,7 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
                 break;
 
-            case POPULAR_MOVIE_TAG:
+            case MovieConstants.POPULAR_MOVIE_TAG:
 
                 ViewHolderPopular viewHolderPopular;
                 if(convertView == null) {

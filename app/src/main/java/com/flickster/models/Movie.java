@@ -4,26 +4,29 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Amod on 3/7/17.
  */
 
-public class Movie {
+public class Movie implements Serializable {
 
     String originalTitle;
     String overview;
     String posterPath;
     String backdropPath;
-    int voteAverage;
+    String releaseDate;
+    double voteAverage;
 
     public Movie(JSONObject jsonObject) throws JSONException {
         this.originalTitle = jsonObject.getString("original_title");
         this.overview = jsonObject.getString("overview");
         this.posterPath = jsonObject.getString("poster_path");
         this.backdropPath = jsonObject.getString("backdrop_path");
-        this.voteAverage = jsonObject.getInt("vote_average");
+        this.voteAverage = jsonObject.getDouble("vote_average");
+        this.releaseDate = jsonObject.getString("release_date");
     }
 
     public String getOriginalTitle() {
@@ -42,8 +45,12 @@ public class Movie {
         return String.format("https://image.tmdb.org/t/p/w342/%s",backdropPath);
     }
 
-    public int getVoteAverage() {
+    public double getVoteAverage() {
         return voteAverage;
+    }
+
+    public String getReleaseDate() {
+        return releaseDate;
     }
 
     public static ArrayList<Movie> fromJSONArray(JSONArray jsonArray) {
