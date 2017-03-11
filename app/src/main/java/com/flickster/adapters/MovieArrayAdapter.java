@@ -1,8 +1,10 @@
 package com.flickster.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +23,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
+
 import static com.flickster.R.id.btnPlayPopular;
 
 /**
@@ -28,6 +32,8 @@ import static com.flickster.R.id.btnPlayPopular;
  */
 
 public class MovieArrayAdapter extends ArrayAdapter<Movie> {
+
+    DisplayMetrics displayMetrics = new DisplayMetrics();
 
     private static class ViewHolder {
         ImageView ivImageView;
@@ -90,10 +96,12 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
                 if(orientation == Configuration.ORIENTATION_PORTRAIT) {
                     Picasso.with(getContext())
                             .load(movie.getPosterPath()).placeholder(R.mipmap.ic_loading)
+                            .transform(new RoundedCornersTransformation(10, 10))
                             .into(viewHolder.ivImageView);
                 } else if(orientation == Configuration.ORIENTATION_LANDSCAPE) {
                     Picasso.with(getContext())
                             .load(movie.getBackdropPath()).placeholder(R.mipmap.ic_loading)
+                            .transform(new RoundedCornersTransformation(10, 10))
                             .into(viewHolder.ivImageView);
                 } else {
                     Log.e(TAG, "Error in Orientation");
@@ -117,17 +125,16 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
                     viewHolderPopular = (ViewHolderPopular) convertView.getTag();
                 }
 
-                if(orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    Picasso.with(getContext())
-                            .load(movie.getPosterPath()).placeholder(R.mipmap.ic_loading)
-                            .into(viewHolderPopular.popImageView);
-                } else if(orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    Picasso.with(getContext())
+                ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+                int height = displayMetrics.heightPixels;
+                int width = displayMetrics.widthPixels;
+
+               Picasso.with(getContext())
                             .load(movie.getBackdropPath()).placeholder(R.mipmap.ic_loading)
+                            .transform(new RoundedCornersTransformation(10, 10))
+                            .resize(width, height)
+                            .centerInside()
                             .into(viewHolderPopular.popImageView);
-                } else {
-                    Log.e(TAG, "Error in Orientation");
-                }
 
                 viewHolderPopular.btnPlayPopular.setOnClickListener(new View.OnClickListener() {
                     @Override
