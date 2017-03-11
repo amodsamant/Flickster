@@ -1,22 +1,27 @@
 package com.flickster.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.flickster.R;
+import com.flickster.activities.VideoActivity;
 import com.flickster.models.Movie;
 import com.flickster.utils.MovieConstants;
 import com.flickster.utils.MovieUtil;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import static com.flickster.R.id.btnPlayPopular;
 
 /**
  * Created by Amod on 3/7/17.
@@ -32,6 +37,7 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
     private static class ViewHolderPopular {
         ImageView popImageView;
+        ImageButton btnPlayPopular;
     }
 
     static final String TAG = "Movie Adapter";
@@ -53,7 +59,7 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        Movie movie = getItem(position);
+        final Movie movie = getItem(position);
 
         int type = getItemViewType(position);
         int orientation = getContext().getResources().getConfiguration().orientation;
@@ -64,7 +70,6 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
                 ViewHolder viewHolder;
                 if(convertView == null) {
-
 
                     convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_movie, null);
 
@@ -84,11 +89,11 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
                 if(orientation == Configuration.ORIENTATION_PORTRAIT) {
                     Picasso.with(getContext())
-                            .load(movie.getPosterPath()).placeholder(R.mipmap.ic_launcher)
+                            .load(movie.getPosterPath()).placeholder(R.mipmap.ic_loading)
                             .into(viewHolder.ivImageView);
                 } else if(orientation == Configuration.ORIENTATION_LANDSCAPE) {
                     Picasso.with(getContext())
-                            .load(movie.getBackdropPath()).placeholder(R.mipmap.ic_launcher)
+                            .load(movie.getBackdropPath()).placeholder(R.mipmap.ic_loading)
                             .into(viewHolder.ivImageView);
                 } else {
                     Log.e(TAG, "Error in Orientation");
@@ -105,6 +110,7 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
                     viewHolderPopular = new ViewHolderPopular();
                     viewHolderPopular.popImageView = (ImageView) convertView.findViewById(R.id.ivPopularMovie);
+                    viewHolderPopular.btnPlayPopular = (ImageButton) convertView.findViewById(btnPlayPopular);
 
                     convertView.setTag(viewHolderPopular);
                 } else {
@@ -113,23 +119,35 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
                 if(orientation == Configuration.ORIENTATION_PORTRAIT) {
                     Picasso.with(getContext())
-                            .load(movie.getPosterPath()).placeholder(R.mipmap.ic_launcher)
+                            .load(movie.getPosterPath()).placeholder(R.mipmap.ic_loading)
                             .into(viewHolderPopular.popImageView);
                 } else if(orientation == Configuration.ORIENTATION_LANDSCAPE) {
                     Picasso.with(getContext())
-                            .load(movie.getBackdropPath()).placeholder(R.mipmap.ic_launcher)
+                            .load(movie.getBackdropPath()).placeholder(R.mipmap.ic_loading)
                             .into(viewHolderPopular.popImageView);
                 } else {
                     Log.e(TAG, "Error in Orientation");
                 }
 
+                viewHolderPopular.btnPlayPopular.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Intent intent = new Intent(v.getContext(),VideoActivity.class);
+                        intent.putExtra("movieId", movie.getMovieId());
+                        v.getContext().startActivity(intent);
+
+                    }
+                });
+
                 break;
             default:
         }
 
-
         return convertView;
 
     }
+
+
 
 }

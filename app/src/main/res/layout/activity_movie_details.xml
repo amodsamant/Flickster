@@ -11,13 +11,19 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.flickster.activities.MovieDetailsActivity">
 
-    <ImageView
+    <com.google.android.youtube.player.YouTubePlayerView
+        android:id="@+id/moviePlayer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/ic_launcher"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/ivMovie" />
+        />
+
+    <!--<ImageView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--app:srcCompat="@mipmap/ic_launcher"-->
+        <!--android:id="@+id/ivMovie" />-->
 
     <TextView
         android:text="date"
@@ -36,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="38dp"
         android:id="@+id/tvMovieTitle"
-        android:layout_below="@+id/ivMovie"
+        android:layout_below="@+id/moviePlayer"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:textSize="20sp"/>
@@ -50,7 +56,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:stepSize="0.1"
-        android:numStars="5"/>
+        android:numStars="5"
+        android:isIndicator="true"/>
 
     <TextView
         android:text="Synopsis"

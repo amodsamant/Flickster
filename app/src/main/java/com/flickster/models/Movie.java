@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 public class Movie implements Serializable {
 
+    long movieId;
     String originalTitle;
     String overview;
     String posterPath;
@@ -21,12 +22,17 @@ public class Movie implements Serializable {
     double voteAverage;
 
     public Movie(JSONObject jsonObject) throws JSONException {
+        this.movieId = jsonObject.getLong("id");
         this.originalTitle = jsonObject.getString("original_title");
         this.overview = jsonObject.getString("overview");
         this.posterPath = jsonObject.getString("poster_path");
         this.backdropPath = jsonObject.getString("backdrop_path");
         this.voteAverage = jsonObject.getDouble("vote_average");
         this.releaseDate = jsonObject.getString("release_date");
+    }
+
+    public long getMovieId() {
+        return movieId;
     }
 
     public String getOriginalTitle() {

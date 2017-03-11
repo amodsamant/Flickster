@@ -88,8 +88,6 @@ public class MovieActivity extends AppCompatActivity {
                         == MovieConstants.POPULAR_MOVIE_TAG) {
 
                 }
-
-
             }
         });
 
