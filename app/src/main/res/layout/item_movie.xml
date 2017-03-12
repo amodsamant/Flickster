@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:padding="2dp">
+    android:layout_width="match_parent" android:layout_height="match_parent">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -22,6 +21,8 @@
         android:layout_marginLeft="20dp"
         android:layout_marginStart="20dp"
         android:textSize="16sp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-condensed"
         android:layout_alignTop="@+id/ivMovieImage"
         android:layout_toRightOf="@+id/ivMovieImage"
         android:layout_toEndOf="@+id/ivMovieImage"/>
@@ -33,5 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvTitle"
         android:layout_alignLeft="@+id/tvTitle"
-        android:layout_alignStart="@+id/tvTitle" />
+        android:layout_alignStart="@+id/tvTitle"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="12sp"/>
 </RelativeLayout>

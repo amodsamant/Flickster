@@ -23,9 +23,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
-
-import static com.flickster.R.id.btnPlayPopular;
 
 /**
  * Created by Amod on 3/7/17.
@@ -35,15 +35,23 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
     DisplayMetrics displayMetrics = new DisplayMetrics();
 
-    private static class ViewHolder {
-        ImageView ivImageView;
-        TextView tvTitle;
-        TextView tvOverview;
+    static class ViewHolder {
+        @BindView(R.id.ivMovieImage) ImageView ivImageView;
+        @BindView(R.id.tvTitle) TextView tvTitle;
+        @BindView(R.id.tvOverview) TextView tvOverview;
+
+        public ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
     }
 
-    private static class ViewHolderPopular {
-        ImageView popImageView;
-        ImageButton btnPlayPopular;
+    static class ViewHolderPopular {
+        @BindView(R.id.ivPopularMovie) ImageView popImageView;
+        @BindView(R.id.btnPlayPopular) ImageButton btnPlayPopular;
+
+        public ViewHolderPopular(View view) {
+            ButterKnife.bind(this, view);
+        }
     }
 
     static final String TAG = "Movie Adapter";
@@ -79,11 +87,11 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
                     convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_movie, null);
 
-                    viewHolder = new ViewHolder();
+                    viewHolder = new ViewHolder(convertView);
 
-                    viewHolder.ivImageView = (ImageView) convertView.findViewById(R.id.ivMovieImage);
-                    viewHolder.tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
-                    viewHolder.tvOverview = (TextView) convertView.findViewById(R.id.tvOverview);
+//                    viewHolder.ivImageView = (ImageView) convertView.findViewById(R.id.ivMovieImage);
+//                    viewHolder.tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
+//                    viewHolder.tvOverview = (TextView) convertView.findViewById(R.id.tvOverview);
 
                     convertView.setTag(viewHolder);
                 } else {
@@ -97,11 +105,13 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
                     Picasso.with(getContext())
                             .load(movie.getPosterPath()).placeholder(R.mipmap.ic_loading)
                             .transform(new RoundedCornersTransformation(10, 10))
+                            .noFade()
                             .into(viewHolder.ivImageView);
                 } else if(orientation == Configuration.ORIENTATION_LANDSCAPE) {
                     Picasso.with(getContext())
                             .load(movie.getBackdropPath()).placeholder(R.mipmap.ic_loading)
                             .transform(new RoundedCornersTransformation(10, 10))
+                            .noFade()
                             .into(viewHolder.ivImageView);
                 } else {
                     Log.e(TAG, "Error in Orientation");
@@ -116,9 +126,7 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
                     convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_popular_movie, null);
 
-                    viewHolderPopular = new ViewHolderPopular();
-                    viewHolderPopular.popImageView = (ImageView) convertView.findViewById(R.id.ivPopularMovie);
-                    viewHolderPopular.btnPlayPopular = (ImageButton) convertView.findViewById(btnPlayPopular);
+                    viewHolderPopular = new ViewHolderPopular(convertView);
 
                     convertView.setTag(viewHolderPopular);
                 } else {
@@ -134,16 +142,15 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
                             .transform(new RoundedCornersTransformation(10, 10))
                             .resize(width, height)
                             .centerInside()
+                            .noFade()
                             .into(viewHolderPopular.popImageView);
 
                 viewHolderPopular.btnPlayPopular.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
                         Intent intent = new Intent(v.getContext(),VideoActivity.class);
                         intent.putExtra("movieId", movie.getMovieId());
                         v.getContext().startActivity(intent);
-
                     }
                 });
 

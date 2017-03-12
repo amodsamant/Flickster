@@ -16,7 +16,7 @@
         app:srcCompat="@mipmap/ic_play"
         android:id="@+id/btnPlayPopular"
         android:layout_gravity="center_vertical|center_horizontal"
-        android:alpha="0.7"
+        android:alpha="0.5"
         android:background="@android:color/transparent"/>
 
 </FrameLayout>
