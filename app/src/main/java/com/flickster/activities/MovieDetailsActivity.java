@@ -12,16 +12,20 @@ import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cz.msebera.android.httpclient.Header;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MovieDetailsActivity extends YouTubeBaseActivity {
 
@@ -30,6 +34,8 @@ public class MovieDetailsActivity extends YouTubeBaseActivity {
     @BindView(R.id.tvReleaseDate)TextView releaseDate;
     @BindView(R.id.ratingBar) RatingBar ratingBar;
     @BindView(R.id.tvSynopsis) TextView synopsis;
+
+    OkHttpClient okHttpClient = new OkHttpClient();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,44 +54,50 @@ public class MovieDetailsActivity extends YouTubeBaseActivity {
                 "https://api.themoviedb.org/3/movie/%d/videos?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed",
                 movie.getMovieId());
 
-        AsyncHttpClient client = new AsyncHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
 
-        client.get(url, new JsonHttpResponseHandler() {
+        okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+            public void onFailure(Call call, IOException e) {
+                Toast.makeText(MovieDetailsActivity.this, "Request Failed!", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
 
-                JSONArray movieJsonResults = null;
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
                 try {
-                    movieJsonResults = response.getJSONArray("results");
+                    JSONObject jsonObject = new JSONObject(response.body().string());
+                    JSONArray movieJsonResults = jsonObject.getJSONArray("results");
                     if(movieJsonResults.length()>0) {
                         final String videoKey = movieJsonResults.getJSONObject(0).getString("key");
-                        youTubePlayerView.initialize(Config.YT_API_KEY,
-                                new YouTubePlayer.OnInitializedListener(){
-                                    @Override
-                                    public void onInitializationSuccess(YouTubePlayer.Provider provider,
-                                                                        YouTubePlayer youTubePlayer, boolean b) {
-                                        youTubePlayer.cueVideo(videoKey);
-                                    }
 
-                                    @Override
-                                    public void onInitializationFailure(YouTubePlayer.Provider provider,
-                                                                        YouTubeInitializationResult youTubeInitializationResult) {
-                                        Toast.makeText(MovieDetailsActivity.this, "Youtube Failed!", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+                        MovieDetailsActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                youTubePlayerView.initialize(Config.YT_API_KEY,
+                                        new YouTubePlayer.OnInitializedListener(){
+                                            @Override
+                                            public void onInitializationSuccess(YouTubePlayer.Provider provider,
+                                                                                YouTubePlayer youTubePlayer, boolean b) {
+                                                youTubePlayer.cueVideo(videoKey);
+                                            }
+
+                                            @Override
+                                            public void onInitializationFailure(YouTubePlayer.Provider provider,
+                                                                                YouTubeInitializationResult youTubeInitializationResult) {
+                                                Toast.makeText(MovieDetailsActivity.this, "Youtube Failed!", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                            }
+                        });
                     }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                super.onSuccess(statusCode, headers, response);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
             }
         });
-
     }
 }
