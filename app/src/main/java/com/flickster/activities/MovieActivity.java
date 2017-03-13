@@ -3,16 +3,16 @@ package com.flickster.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.flickster.config.ClientOkHttp;
-import com.flickster.config.Config;
 import com.flickster.R;
 import com.flickster.adapters.MovieArrayAdapter;
+import com.flickster.config.ClientOkHttp;
+import com.flickster.config.Config;
 import com.flickster.models.Movie;
 import com.flickster.utils.MovieConstants;
 import com.flickster.utils.MovieUtil;
@@ -34,9 +34,11 @@ import okhttp3.Response;
 
 public class MovieActivity extends AppCompatActivity {
 
+    public static final String TAG = "MovieActivity";
     ArrayList<Movie> movies;
     MovieArrayAdapter movieAdapter;
     @BindView(R.id.lvMovies) ListView lvItems;
+
     OkHttpClient okHttpClient = ClientOkHttp.getOkHttpClient();
 
     @Override
@@ -61,8 +63,7 @@ public class MovieActivity extends AppCompatActivity {
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
-                Toast.makeText(MovieActivity.this, "Request Failed!", Toast.LENGTH_SHORT).show();
+                Log.e(TAG,"Failure in now playing url request");
                 e.printStackTrace();
             }
 
@@ -97,12 +98,6 @@ public class MovieActivity extends AppCompatActivity {
                     Intent intent = new Intent(MovieActivity.this, MovieDetailsActivity.class);
                     intent.putExtra("movie", movie);
                     startActivity(intent);
-
-                }
-                else if(MovieUtil.getItemTypeRatingBased(
-                        movieAdapter.getItem(position).getVoteAverage())
-                        == MovieConstants.POPULAR_MOVIE_TAG) {
-
                 }
             }
         });

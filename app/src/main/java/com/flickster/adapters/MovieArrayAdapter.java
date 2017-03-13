@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -98,7 +99,6 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
                 }
 
                 viewHolder.tvTitle.setText(movie.getOriginalTitle());
-                viewHolder.tvOverview.setText(movie.getOverview());
 
                 if(orientation == Configuration.ORIENTATION_PORTRAIT) {
                     Picasso.with(getContext())
@@ -108,6 +108,7 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
                             .centerInside()
                             .noFade()
                             .into(viewHolder.ivImageView);
+
                 } else if(orientation == Configuration.ORIENTATION_LANDSCAPE) {
                     Picasso.with(getContext())
                             .load(movie.getBackdropPath()).placeholder(R.drawable.loading)
@@ -116,10 +117,15 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
                             .centerInside()
                             .noFade()
                             .into(viewHolder.ivImageView);
+
+                    viewHolder.tvOverview.setEllipsize(TextUtils.TruncateAt.END);
+                    viewHolder.tvOverview.setMaxLines(5);
+
                 } else {
                     Log.e(TAG, "Error in Orientation");
                 }
 
+                viewHolder.tvOverview.setText(movie.getOverview());
                 break;
 
             case MovieConstants.POPULAR_MOVIE_TAG:
@@ -129,9 +135,7 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
                     convertView = LayoutInflater
                             .from(getContext()).inflate(R.layout.item_popular_movie, null);
-
                     viewHolderPopular = new ViewHolderPopular(convertView);
-
                     convertView.setTag(viewHolderPopular);
                 } else {
                     viewHolderPopular = (ViewHolderPopular) convertView.getTag();

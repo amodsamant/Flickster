@@ -33,8 +33,10 @@
         android:layout_below="@+id/tvTitle"
         android:layout_alignLeft="@+id/tvTitle"
         android:layout_alignStart="@+id/tvTitle"
+        android:layout_alignBottom="@id/ivMovieImage"
         android:fontFamily="sans-serif-condensed"
         android:textSize="16sp"
+        android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:layout_marginRight="5dp"/>
 </RelativeLayout>

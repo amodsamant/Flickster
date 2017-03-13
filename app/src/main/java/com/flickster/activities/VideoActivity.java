@@ -1,11 +1,11 @@
 package com.flickster.activities;
 
 import android.os.Bundle;
-import android.widget.Toast;
+import android.util.Log;
 
+import com.flickster.R;
 import com.flickster.config.ClientOkHttp;
 import com.flickster.config.Config;
-import com.flickster.R;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
@@ -27,8 +27,8 @@ import okhttp3.Response;
 
 public class VideoActivity extends YouTubeBaseActivity {
 
+    public static final String TAG = "VideoActivity";
     @BindView(R.id.moviePlayer) YouTubePlayerView youTubePlayerView;
-
     OkHttpClient okHttpClient = ClientOkHttp.getOkHttpClient();
 
     @Override
@@ -48,7 +48,7 @@ public class VideoActivity extends YouTubeBaseActivity {
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Toast.makeText(VideoActivity.this, "Youtube Failed!", Toast.LENGTH_SHORT).show();
+                Log.e(TAG,"Failure in getting video url request");
                 e.printStackTrace();
             }
 
@@ -79,10 +79,7 @@ public class VideoActivity extends YouTubeBaseActivity {
                                                     YouTubeInitializationResult
                                                             youTubeInitializationResult) {
 
-                                                Toast.makeText(
-                                                        VideoActivity.this,
-                                                        "Youtube Failed!",
-                                                        Toast.LENGTH_SHORT).show();
+                                                Log.e(TAG,"Failure in loading youtube video");
                                             }
                                         });
                             }

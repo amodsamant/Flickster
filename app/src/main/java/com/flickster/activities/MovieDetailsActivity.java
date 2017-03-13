@@ -1,13 +1,13 @@
 package com.flickster.activities;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.flickster.R;
 import com.flickster.config.ClientOkHttp;
 import com.flickster.config.Config;
-import com.flickster.R;
 import com.flickster.models.Movie;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
@@ -30,6 +30,7 @@ import okhttp3.Response;
 
 public class MovieDetailsActivity extends YouTubeBaseActivity {
 
+    public static final String TAG = "MovieDetailsActivity";
     @BindView(R.id.moviePlayer) YouTubePlayerView youTubePlayerView;
     @BindView(R.id.tvMovieTitle) TextView title;
     @BindView(R.id.tvReleaseDate)TextView releaseDate;
@@ -60,7 +61,7 @@ public class MovieDetailsActivity extends YouTubeBaseActivity {
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Toast.makeText(MovieDetailsActivity.this, "Request Failed!", Toast.LENGTH_SHORT).show();
+                Log.e(TAG,"Failure in getting video url request");
                 e.printStackTrace();
             }
 
@@ -79,15 +80,18 @@ public class MovieDetailsActivity extends YouTubeBaseActivity {
                                 youTubePlayerView.initialize(Config.YT_API_KEY,
                                         new YouTubePlayer.OnInitializedListener(){
                                             @Override
-                                            public void onInitializationSuccess(YouTubePlayer.Provider provider,
-                                                                                YouTubePlayer youTubePlayer, boolean b) {
+                                            public void onInitializationSuccess(
+                                                    YouTubePlayer.Provider provider,
+                                                    YouTubePlayer youTubePlayer, boolean b) {
                                                 youTubePlayer.cueVideo(videoKey);
                                             }
 
                                             @Override
-                                            public void onInitializationFailure(YouTubePlayer.Provider provider,
-                                                                                YouTubeInitializationResult youTubeInitializationResult) {
-                                                Toast.makeText(MovieDetailsActivity.this, "Youtube Failed!", Toast.LENGTH_SHORT).show();
+                                            public void onInitializationFailure(
+                                                    YouTubePlayer.Provider provider,
+                                                    YouTubeInitializationResult
+                                                            youTubeInitializationResult) {
+                                                Log.e(TAG,"Failure in cueing youtube video");
                                             }
                                         });
                             }
