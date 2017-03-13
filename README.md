@@ -46,3 +46,11 @@ Additional Stories:
 - [x] Flickster app has a new icon
 
 - [x] Used Picasso library functions to get the correct size of the images in the views
+
+Here's a walkthrough of implemented user stories:
+
+Dropbox link: https://www.dropbox.com/s/1jhuujdyej8qdll/Flicks%20App.mp4?dl=0
+
+<img src='http://imgur.com/a/MDXiH' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+GIF created with [LiceCap](http://www.cockos.com/licecap/).
