@@ -29,6 +29,7 @@ import butterknife.ButterKnife;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 /**
+ * Array adapter class for displaying the main list in MovieActivity
  * Created by Amod on 3/7/17.
  */
 

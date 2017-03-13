@@ -28,6 +28,9 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+/**
+ * MovieDetailsActivity used for less popular movies
+ */
 public class MovieDetailsActivity extends YouTubeBaseActivity {
 
     public static final String TAG = "MovieDetailsActivity";
@@ -37,6 +40,7 @@ public class MovieDetailsActivity extends YouTubeBaseActivity {
     @BindView(R.id.ratingBar) RatingBar ratingBar;
     @BindView(R.id.tvSynopsis) TextView synopsis;
 
+    //Read the singleton OkHttpClient client
     OkHttpClient okHttpClient = ClientOkHttp.getOkHttpClient();
 
     @Override
@@ -52,8 +56,8 @@ public class MovieDetailsActivity extends YouTubeBaseActivity {
         ratingBar.setRating((float) movie.getVoteAverage()/2f);
         synopsis.setText(movie.getOverview());
 
+        //Build url request object for getting list of movies
         String url = String.format(Config.MOVIE_API, movie.getMovieId());
-
         Request request = new Request.Builder()
                 .url(url)
                 .build();
@@ -74,6 +78,7 @@ public class MovieDetailsActivity extends YouTubeBaseActivity {
                     if(movieJsonResults.length()>0) {
                         final String videoKey = movieJsonResults.getJSONObject(0).getString("key");
 
+                        //This runs on the main UI thread as there is an update to the view
                         MovieDetailsActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -83,6 +88,7 @@ public class MovieDetailsActivity extends YouTubeBaseActivity {
                                             public void onInitializationSuccess(
                                                     YouTubePlayer.Provider provider,
                                                     YouTubePlayer youTubePlayer, boolean b) {
+                                                //Start cue video
                                                 youTubePlayer.cueVideo(videoKey);
                                             }
 

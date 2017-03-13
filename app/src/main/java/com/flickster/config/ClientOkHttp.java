@@ -3,9 +3,8 @@ package com.flickster.config;
 import okhttp3.OkHttpClient;
 
 /**
- * Created by Amod on 3/12/17.
+ * Singleton class for getting OkHttpClient
  */
-
 public class ClientOkHttp {
 
     private static OkHttpClient okHttpClient = null;
@@ -13,6 +12,7 @@ public class ClientOkHttp {
     private ClientOkHttp() {
 
     }
+
 
     public static OkHttpClient getOkHttpClient() {
         if(okHttpClient == null) {

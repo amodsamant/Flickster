@@ -25,6 +25,9 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+/**
+ * VideoActivity used to show the video for popular movies
+ */
 public class VideoActivity extends YouTubeBaseActivity {
 
     public static final String TAG = "VideoActivity";
@@ -39,8 +42,9 @@ public class VideoActivity extends YouTubeBaseActivity {
 
         long movieId = getIntent().getLongExtra("movieId",0l);
 
+        //Build url request object for getting list of movies trailers
+        //for that movie id
         String url = String.format(Config.MOVIE_API, movieId);
-
         Request request = new Request.Builder()
                 .url(url)
                 .build();
@@ -61,6 +65,7 @@ public class VideoActivity extends YouTubeBaseActivity {
                     if(movieJsonResults.length()>0) {
                         final String videoKey = movieJsonResults.getJSONObject(0).getString("key");
 
+                        //This runs on the main UI thread as there is an update to the view
                         VideoActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {

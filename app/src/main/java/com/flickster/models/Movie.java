@@ -8,9 +8,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Created by Amod on 3/7/17.
+ * Main model object used for Movie
  */
-
 public class Movie implements Serializable {
 
     long movieId;
@@ -59,6 +58,11 @@ public class Movie implements Serializable {
         return releaseDate;
     }
 
+    /**
+     * Function parses the json array and build a list of {@link Movie}
+     * @param jsonArray
+     * @return list of movies
+     */
     public static ArrayList<Movie> fromJSONArray(JSONArray jsonArray) {
 
         ArrayList<Movie> results = new ArrayList<>();

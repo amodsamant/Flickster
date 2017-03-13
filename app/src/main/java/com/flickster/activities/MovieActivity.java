@@ -32,6 +32,9 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+/**
+ * Main activity class for the Flickster app
+ */
 public class MovieActivity extends AppCompatActivity {
 
     public static final String TAG = "MovieActivity";
