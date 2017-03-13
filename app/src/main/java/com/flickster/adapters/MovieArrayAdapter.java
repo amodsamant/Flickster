@@ -36,6 +36,7 @@ import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
     DisplayMetrics displayMetrics = new DisplayMetrics();
+    static final String TAG = "Movie Adapter";
 
     static class ViewHolder {
         @BindView(R.id.ivMovieImage) ImageView ivImageView;
@@ -55,8 +56,6 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
             ButterKnife.bind(this, view);
         }
     }
-
-    static final String TAG = "Movie Adapter";
 
     public MovieArrayAdapter(Context context, List<Movie> movies) {
         super(context, android.R.layout.simple_list_item_1, movies);

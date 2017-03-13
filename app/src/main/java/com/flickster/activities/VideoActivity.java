@@ -30,7 +30,7 @@ import okhttp3.Response;
  */
 public class VideoActivity extends YouTubeBaseActivity {
 
-    public static final String TAG = "VideoActivity";
+    static final String TAG = "VideoActivity";
     @BindView(R.id.moviePlayer) YouTubePlayerView youTubePlayerView;
     OkHttpClient okHttpClient = ClientOkHttp.getOkHttpClient();
 

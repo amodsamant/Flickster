@@ -33,7 +33,7 @@ import okhttp3.Response;
  */
 public class MovieDetailsActivity extends YouTubeBaseActivity {
 
-    public static final String TAG = "MovieDetailsActivity";
+    static final String TAG = "MovieDetailsActivity";
     @BindView(R.id.moviePlayer) YouTubePlayerView youTubePlayerView;
     @BindView(R.id.tvMovieTitle) TextView title;
     @BindView(R.id.tvReleaseDate)TextView releaseDate;

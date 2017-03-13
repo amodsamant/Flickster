@@ -37,7 +37,7 @@ import okhttp3.Response;
  */
 public class MovieActivity extends AppCompatActivity {
 
-    public static final String TAG = "MovieActivity";
+    static final String TAG = "MovieActivity";
     ArrayList<Movie> movies;
     MovieArrayAdapter movieAdapter;
     @BindView(R.id.lvMovies) ListView lvItems;

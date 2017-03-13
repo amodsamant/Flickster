@@ -1,7 +1,7 @@
 package com.flickster.utils;
 
 /**
- * Created by Amod on 3/9/17.
+ * Constants file for Flickster app
  */
 
 public class MovieConstants {
