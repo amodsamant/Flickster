@@ -3,7 +3,8 @@ package com.flickster.activities;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.flickster.Config;
+import com.flickster.config.ClientOkHttp;
+import com.flickster.config.Config;
 import com.flickster.R;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
@@ -28,8 +29,7 @@ public class VideoActivity extends YouTubeBaseActivity {
 
     @BindView(R.id.moviePlayer) YouTubePlayerView youTubePlayerView;
 
-    OkHttpClient okHttpClient = new OkHttpClient();
-
+    OkHttpClient okHttpClient = ClientOkHttp.getOkHttpClient();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +39,7 @@ public class VideoActivity extends YouTubeBaseActivity {
 
         long movieId = getIntent().getLongExtra("movieId",0l);
 
-        String url = String.format(
-                "https://api.themoviedb.org/3/movie/%d/videos?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed",
-                movieId);
+        String url = String.format(Config.MOVIE_API, movieId);
 
         Request request = new Request.Builder()
                 .url(url)
@@ -69,20 +67,26 @@ public class VideoActivity extends YouTubeBaseActivity {
                                 youTubePlayerView.initialize(Config.YT_API_KEY,
                                         new YouTubePlayer.OnInitializedListener(){
                                             @Override
-                                            public void onInitializationSuccess(YouTubePlayer.Provider provider,
-                                                                                YouTubePlayer youTubePlayer, boolean b) {
+                                            public void onInitializationSuccess(
+                                                    YouTubePlayer.Provider provider,
+                                                    YouTubePlayer youTubePlayer, boolean b) {
                                                 youTubePlayer.loadVideo(videoKey);
                                             }
 
                                             @Override
-                                            public void onInitializationFailure(YouTubePlayer.Provider provider,
-                                                                                YouTubeInitializationResult youTubeInitializationResult) {
-                                                Toast.makeText(VideoActivity.this, "Youtube Failed!", Toast.LENGTH_SHORT).show();
+                                            public void onInitializationFailure(
+                                                    YouTubePlayer.Provider provider,
+                                                    YouTubeInitializationResult
+                                                            youTubeInitializationResult) {
+
+                                                Toast.makeText(
+                                                        VideoActivity.this,
+                                                        "Youtube Failed!",
+                                                        Toast.LENGTH_SHORT).show();
                                             }
                                         });
                             }
                         });
-
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

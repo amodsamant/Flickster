@@ -78,6 +78,10 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         int type = getItemViewType(position);
         int orientation = getContext().getResources().getConfiguration().orientation;
 
+        ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        int width = displayMetrics.widthPixels;
+
         switch (type) {
 
             case MovieConstants.MOVIE_TAG:
@@ -85,14 +89,9 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
                 ViewHolder viewHolder;
                 if(convertView == null) {
 
-                    convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_movie, null);
-
+                    convertView = LayoutInflater
+                            .from(getContext()).inflate(R.layout.item_movie, null);
                     viewHolder = new ViewHolder(convertView);
-
-//                    viewHolder.ivImageView = (ImageView) convertView.findViewById(R.id.ivMovieImage);
-//                    viewHolder.tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
-//                    viewHolder.tvOverview = (TextView) convertView.findViewById(R.id.tvOverview);
-
                     convertView.setTag(viewHolder);
                 } else {
                     viewHolder = (ViewHolder) convertView.getTag();
@@ -103,14 +102,18 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
                 if(orientation == Configuration.ORIENTATION_PORTRAIT) {
                     Picasso.with(getContext())
-                            .load(movie.getPosterPath()).placeholder(R.mipmap.ic_loading)
+                            .load(movie.getPosterPath()).placeholder(R.drawable.loading)
                             .transform(new RoundedCornersTransformation(10, 10))
+                            .resize(width*2/5, height*2/5)
+                            .centerInside()
                             .noFade()
                             .into(viewHolder.ivImageView);
                 } else if(orientation == Configuration.ORIENTATION_LANDSCAPE) {
                     Picasso.with(getContext())
-                            .load(movie.getBackdropPath()).placeholder(R.mipmap.ic_loading)
+                            .load(movie.getBackdropPath()).placeholder(R.drawable.loading)
                             .transform(new RoundedCornersTransformation(10, 10))
+                            .resize(width/2, height/2)
+                            .centerInside()
                             .noFade()
                             .into(viewHolder.ivImageView);
                 } else {
@@ -124,7 +127,8 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
                 ViewHolderPopular viewHolderPopular;
                 if(convertView == null) {
 
-                    convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_popular_movie, null);
+                    convertView = LayoutInflater
+                            .from(getContext()).inflate(R.layout.item_popular_movie, null);
 
                     viewHolderPopular = new ViewHolderPopular(convertView);
 
@@ -133,12 +137,8 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
                     viewHolderPopular = (ViewHolderPopular) convertView.getTag();
                 }
 
-                ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-                int height = displayMetrics.heightPixels;
-                int width = displayMetrics.widthPixels;
-
                Picasso.with(getContext())
-                            .load(movie.getBackdropPath()).placeholder(R.mipmap.ic_loading)
+                            .load(movie.getBackdropPath()).placeholder(R.drawable.loading)
                             .transform(new RoundedCornersTransformation(10, 10))
                             .resize(width, height)
                             .centerInside()
@@ -159,9 +159,5 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         }
 
         return convertView;
-
     }
-
-
-
 }

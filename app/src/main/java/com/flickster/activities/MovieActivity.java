@@ -9,6 +9,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.flickster.config.ClientOkHttp;
+import com.flickster.config.Config;
 import com.flickster.R;
 import com.flickster.adapters.MovieArrayAdapter;
 import com.flickster.models.Movie;
@@ -35,6 +37,7 @@ public class MovieActivity extends AppCompatActivity {
     ArrayList<Movie> movies;
     MovieArrayAdapter movieAdapter;
     @BindView(R.id.lvMovies) ListView lvItems;
+    OkHttpClient okHttpClient = ClientOkHttp.getOkHttpClient();
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
@@ -51,12 +54,9 @@ public class MovieActivity extends AppCompatActivity {
         movieAdapter = new MovieArrayAdapter(this, movies);
         lvItems.setAdapter(movieAdapter);
 
-        String url = "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
         Request request = new Request.Builder()
-                .url(url)
+                .url(Config.NOW_PLAYING_URL)
                 .build();
-
-        OkHttpClient okHttpClient = new OkHttpClient();
 
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
@@ -99,7 +99,8 @@ public class MovieActivity extends AppCompatActivity {
                     startActivity(intent);
 
                 }
-                else if(MovieUtil.getItemTypeRatingBased(movieAdapter.getItem(position).getVoteAverage())
+                else if(MovieUtil.getItemTypeRatingBased(
+                        movieAdapter.getItem(position).getVoteAverage())
                         == MovieConstants.POPULAR_MOVIE_TAG) {
 
                 }

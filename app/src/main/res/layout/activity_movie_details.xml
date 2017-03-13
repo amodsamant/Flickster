@@ -1,68 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_movie_details"
+    tools:context="com.flickster.activities.MovieDetailsActivity"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.flickster.activities.MovieDetailsActivity">
-
-    <com.google.android.youtube.player.YouTubePlayerView
-        android:id="@+id/moviePlayer"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/activity_movie_details"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:text="date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvReleaseDate"
-        android:layout_below="@+id/tvMovieTitle"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="19dp"
-        android:textSize="12sp"/>
+        <com.google.android.youtube.player.YouTubePlayerView
+            android:id="@+id/moviePlayer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            />
 
-    <TextView
-        android:text="Title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="38dp"
-        android:id="@+id/tvMovieTitle"
-        android:layout_below="@+id/moviePlayer"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:textSize="20sp"/>
+        <TextView
+            android:text="date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvReleaseDate"
+            android:layout_below="@+id/tvMovieTitle"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="15dp"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-condensed"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"/>
 
-    <RatingBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/ratingBar"
-        android:layout_marginTop="14dp"
-        android:layout_below="@+id/tvReleaseDate"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:stepSize="0.1"
-        android:numStars="5"
-        android:isIndicator="true"/>
+        <TextView
+            android:text="Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:id="@+id/tvMovieTitle"
+            android:layout_below="@+id/moviePlayer"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-condensed"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"/>
 
-    <TextView
-        android:text="Synopsis"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvSynopsis"
-        android:textSize="14sp"
-        android:layout_marginTop="5dp"
-        android:layout_below="@+id/ratingBar"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/tvReleaseDate"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:stepSize="0.05"
+            android:numStars="5"
+            android:isIndicator="true"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
 
-</RelativeLayout>
+        <TextView
+            android:text="Synopsis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvSynopsis"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-condensed"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/ratingBar"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"/>
+
+    </RelativeLayout>
+</ScrollView>

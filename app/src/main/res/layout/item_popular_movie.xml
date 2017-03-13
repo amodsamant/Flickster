@@ -5,18 +5,30 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/ivPopularMovie"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
         android:layout_gravity="center_vertical|center_horizontal" />
 
     <ImageButton
+        android:id="@+id/btnPlayPopular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/ic_play"
-        android:id="@+id/btnPlayPopular"
+        android:alpha="0.7"
         android:layout_gravity="center_vertical|center_horizontal"
-        android:alpha="0.5"
-        android:background="@android:color/transparent"/>
+        android:background="@drawable/image_btn_states"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableRight="@drawable/star"
+        android:id="@+id/imageView"
+        android:layout_gravity="right|top"
+        android:layout_marginRight="6dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center_vertical"
+        android:fontFamily="sans-serif-smallcaps"
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"/>
 
 </FrameLayout>

@@ -7,7 +7,6 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:src="@mipmap/ic_launcher"
         android:id="@+id/ivMovieImage"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
@@ -15,12 +14,12 @@
 
     <TextView
         android:id="@+id/tvTitle"
-        android:text="Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp"
-        android:textSize="16sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:fontFamily="sans-serif-condensed"
         android:layout_alignTop="@+id/ivMovieImage"
@@ -29,12 +28,13 @@
 
     <TextView
         android:id="@+id/tvOverview"
-        android:text="Overview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvTitle"
         android:layout_alignLeft="@+id/tvTitle"
         android:layout_alignStart="@+id/tvTitle"
         android:fontFamily="sans-serif-condensed"
-        android:textSize="12sp"/>
+        android:textSize="16sp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="5dp"/>
 </RelativeLayout>

@@ -7,6 +7,7 @@ package com.flickster.utils;
 public class MovieUtil {
 
     public static int getItemTypeRatingBased(double value) {
-        return value > 5.0 ? MovieConstants.POPULAR_MOVIE_TAG : MovieConstants.MOVIE_TAG;
+        return value > MovieConstants.POPULAR_RATING_BASE ?
+                MovieConstants.POPULAR_MOVIE_TAG : MovieConstants.MOVIE_TAG;
     }
 }

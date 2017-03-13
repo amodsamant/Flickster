@@ -5,7 +5,8 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.flickster.Config;
+import com.flickster.config.ClientOkHttp;
+import com.flickster.config.Config;
 import com.flickster.R;
 import com.flickster.models.Movie;
 import com.google.android.youtube.player.YouTubeBaseActivity;
@@ -35,7 +36,7 @@ public class MovieDetailsActivity extends YouTubeBaseActivity {
     @BindView(R.id.ratingBar) RatingBar ratingBar;
     @BindView(R.id.tvSynopsis) TextView synopsis;
 
-    OkHttpClient okHttpClient = new OkHttpClient();
+    OkHttpClient okHttpClient = ClientOkHttp.getOkHttpClient();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +51,7 @@ public class MovieDetailsActivity extends YouTubeBaseActivity {
         ratingBar.setRating((float) movie.getVoteAverage()/2f);
         synopsis.setText(movie.getOverview());
 
-        String url = String.format(
-                "https://api.themoviedb.org/3/movie/%d/videos?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed",
-                movie.getMovieId());
+        String url = String.format(Config.MOVIE_API, movie.getMovieId());
 
         Request request = new Request.Builder()
                 .url(url)
