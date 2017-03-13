@@ -4,7 +4,7 @@
 
 Submitted by: Amod Pradeep Samant
 
-Time spent: 14-15 hours spent in total
+Time spent: 10-12 hours spent in total
 
 User Stories
 
